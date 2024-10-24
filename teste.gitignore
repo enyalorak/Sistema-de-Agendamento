@@ -1,0 +1,10 @@
+*.dcu
+*.exe
+*.dll
+*.log
+*.map
+*.tds
+*.cfg
+*.local
+__history/
+__recovery/
