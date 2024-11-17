@@ -9,7 +9,9 @@ Este sistema, desenvolvido como trabalho prático para a disciplina de Práticas
 
 ## Tecnologias Utilizadas
 **Linguagem de Programação:** Delphi
+
 **Banco de Dados:** Firebird
+
 **Bibliotecas e Componentes:** FireDAC para conexão com o banco de dados
 
 ## Como Usar
