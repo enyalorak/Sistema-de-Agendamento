@@ -13,10 +13,10 @@ Este sistema, desenvolvido como trabalho prático para a disciplina de Práticas
 **Bibliotecas e Componentes:** FireDAC para conexão com o banco de dados
 
 ## Como Usar
-Abra o aplicativo.
-Utilize as opções de menu para cadastrar novos clientes e serviços.
-Agende serviços selecionando um cliente, um serviço e definindo a data.
-Visualize os agendamentos na tela de listagem.
+* Abra o aplicativo.
+* Utilize as opções de menu para cadastrar novos clientes e serviços.
+* Agende serviços selecionando um cliente, um serviço e definindo a data.
+* Visualize os agendamentos na tela de listagem.
 ![image](https://github.com/user-attachments/assets/5535f873-ee78-4d79-a1a6-8eb788516bb5)
 ![image](https://github.com/user-attachments/assets/26b20675-4cd0-46b9-82cd-f0285ec97832)
 ![image](https://github.com/user-attachments/assets/b69fdf9c-cf79-4bd4-9758-e50b43a7a824)
