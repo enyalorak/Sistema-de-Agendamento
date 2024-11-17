@@ -1,0 +1,74 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Servicos'
+  ClientHeight = 441
+  ClientWidth = 624
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object Label1: TLabel
+    Left = 224
+    Top = 32
+    Width = 121
+    Height = 15
+    Caption = 'CADASTRAR SERVICOS'
+  end
+  object Label2: TLabel
+    Left = 48
+    Top = 91
+    Width = 74
+    Height = 15
+    Caption = 'Nome Servi'#231'o'
+  end
+  object Label3: TLabel
+    Left = 48
+    Top = 160
+    Width = 26
+    Height = 15
+    Caption = 'Valor'
+  end
+  object edtNomeServico: TEdit
+    Left = 48
+    Top = 112
+    Width = 121
+    Height = 23
+    TabOrder = 0
+  end
+  object edtValorServico: TEdit
+    Left = 48
+    Top = 181
+    Width = 121
+    Height = 23
+    TabOrder = 1
+  end
+  object btnSalvarServico: TButton
+    Left = 64
+    Top = 232
+    Width = 75
+    Height = 25
+    Caption = 'Salvar'
+    TabOrder = 2
+    OnClick = btnSalvarServicoClick
+  end
+  object FDQueryServicos: TFDQuery
+    Connection = FDConnectionServicos
+    Left = 528
+    Top = 112
+  end
+  object FDConnectionServicos: TFDConnection
+    Params.Strings = (
+      
+        'Database=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicia' +
+        'nenails\DB.FDB'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'DriverID=FB')
+    Left = 360
+    Top = 120
+  end
+end

@@ -1,0 +1,141 @@
+﻿unit uNailDesigner;
+
+interface
+
+uses
+  SysUtils, Classes, Graphics, Controls, Forms, StdCtrls, ExtCtrls,
+  Vcl.Imaging.pngimage, Vcl.ComCtrls, Vcl.Menus, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS;
+type
+  TForm1 = class(TForm)
+    ImageLogo: TImage;
+    MainMenu1: TMainMenu;
+    Cadastros1: TMenuItem;
+    CadCliente: TMenuItem;
+//    procedure ButtonAdicionarClick(Sender: TObject);
+   // procedure ButtonLimparClick(Sender: TObject);
+   // procedure ButtonSairClick(Sender: TObject);
+   // procedure ButtonExportarCSVClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+   // procedure SomarValores();
+   procedure CadClienteClick(Sender: TObject);
+   // procedure edtNomeCliente(Sender: TObject);
+  private
+  public
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+uses UnitCadClientes;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+
+  Form1.Caption := 'Gleiciane Nail Designer';
+
+
+
+
+
+end;
+
+  procedure TForm1.CadClienteClick(Sender: TObject);
+begin
+  // Instanciando o formulário de cadastro de clientes e mostrando-o
+  with TFormCadClientes.Create(Self) do
+  begin
+    Show;
+  end;
+end;
+
+(*procedure TForm1.ButtonAdicionarClick(Sender: TObject);
+var
+  clienteInfo: string;
+begin
+
+  clienteInfo := 'Cliente: ' + edtNomeCliente.Text + ' - Serviço: ' + ComboBoxServicos.Text + ' Data: ' + DateToStr(DateTimePicker1.Date);
+  ListBoxClientes.Items.Add(clienteInfo);
+
+
+  SomarValores();
+end;
+
+procedure TForm1.ButtonLimparClick(Sender: TObject);
+begin
+  // Limpar o campo do nome do cliente
+  edtNomeCliente.Clear;
+
+  // Resetar a seleção do ComboBox de serviços
+  ComboBoxServicos.ItemIndex := -1;
+
+  // Resetar o DateTimePicker para a data atual
+  DateTimePicker1.Date := Now;
+
+  // Resetar o valor total dos serviços
+  edtValorTotalServicos.Text := 'R$ 0,00';
+end;
+
+procedure TForm1.ButtonSairClick(Sender: TObject);
+begin
+   Application.Terminate;
+end;   *)
+
+
+
+(*
+procedure TForm1.SomarValores();
+var
+  valorAtual, totalAtual: Extended;
+begin
+  totalAtual := StrToFloatDef(StringReplace(edtValorTotalServicos.Text, 'R$ ', '', []), 0);
+
+
+  case ComboBoxServicos.ItemIndex of
+    0: valorAtual := 120;
+    1: valorAtual := 90;
+    2: valorAtual := 90;
+    3: valorAtual := 90;
+    4: valorAtual := 5;
+    5: valorAtual := 35;
+    6: valorAtual := 20;
+    7: valorAtual := 20;
+  else
+    valorAtual := 0;
+  end;
+
+  totalAtual := totalAtual + valorAtual;
+
+  edtValorTotalServicos.Text := 'R$ ' + FormatFloat('0.00', totalAtual);
+end;
+
+procedure TForm1.ButtonExportarCSVClick(Sender: TObject);
+var
+  i: Integer;
+  linhaCSV: TStringList;
+  csvLine: String;
+begin
+  linhaCSV := TStringList.Create;
+  try
+    // Adicionar cabeçalhos ao CSV
+    linhaCSV.Add('Nome Cliente,Serviço');
+
+
+    for i := 0 to ListBoxClientes.Items.Count - 1 do
+    begin
+      csvLine := ListBoxClientes.Items[i]; // Aqui vai adicionar o cliente e o serviço
+      linhaCSV.Add(csvLine);
+    end;
+
+
+    linhaCSV.SaveToFile('C:\clientes_servicos.csv');
+  finally
+    linhaCSV.Free;
+  end;
+
+  //ShowMessage('Dados exportados para CSV com sucesso!');
+  end;       *)
+end.

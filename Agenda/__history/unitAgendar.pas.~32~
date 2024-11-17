@@ -1,0 +1,185 @@
+unit UnitAgendar;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.VCLUI.Wait, FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, Vcl.ExtCtrls;
+
+type
+  TfrmCadAgenda = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    DateTimePicker1: TDateTimePicker;
+    Label3: TLabel;
+    edtCliente: TEdit;
+    cmbServico: TComboBox;
+    btnAgendar: TButton;
+    FDQueryAgenda: TFDQuery;
+    FDConnectionAgenda: TFDConnection;
+    FDQueryCliente: TFDQuery;
+    Timer1: TTimer;
+    procedure btnAgendarClick(Sender: TObject);
+    procedure edtClienteChange(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure cmbServicoChange(Sender: TObject);
+  private
+    procedure VerificarClienteNoBD; // Verifica se o cliente existe no banco de dados
+    procedure CarregarClientes(Sender: TObject); // Carregar lista de clientes (se necessário)
+    procedure CarregarServicos;
+  public
+  end;
+
+var
+  frmCadAgenda: TfrmCadAgenda;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmCadAgenda.CarregarClientes(Sender: TObject);
+begin
+  // Carregar todos os clientes na base, caso necessário
+  FDQueryCliente.SQL.Text := 'SELECT * FROM CLIENTES';
+  FDQueryCliente.Open;
+end;
+
+procedure TfrmCadAgenda.cmbServicoChange(Sender: TObject);
+begin
+  // Buscar o valor do serviço selecionado
+  FDQueryAgenda.Close;
+  FDQueryAgenda.SQL.Text := 'SELECT PRECO, ID_SERVICO FROM SERVICOS WHERE NOMESERVICO = :NOMESERVICO';
+  FDQueryAgenda.ParamByName('NOMESERVICO').AsString := cmbServico.Text;
+  FDQueryAgenda.Open;
+
+  if not FDQueryAgenda.IsEmpty then
+  begin
+    ShowMessage('Valor do serviço selecionado: ' + FDQueryAgenda.FieldByName('PRECO').AsString);
+    // Opcional: você pode armazenar ou exibir o valor em um campo apropriado
+  end;
+end;
+
+procedure TfrmCadAgenda.VerificarClienteNoBD;
+begin
+  // Fechar qualquer consulta anterior
+  FDQueryCliente.Close;
+  FDQueryCliente.SQL.Text := 'SELECT * FROM CLIENTES WHERE NOME = :NOME';
+  FDQueryCliente.ParamByName('NOME').AsString := edtCliente.Text;
+  FDQueryCliente.Open;
+
+  if FDQueryCliente.IsEmpty then
+  begin
+    ShowMessage('Cliente não encontrado. Por favor, cadastre o cliente.');
+    // Exemplo de abrir o formulário de cadastro de cliente, caso necessário
+    // TfrmCadClientes.Create(Self).ShowModal;
+  end;
+end;
+
+procedure TfrmCadAgenda.btnAgendarClick(Sender: TObject);
+var
+  SelectedIDServico: Integer;
+begin
+  // Verificar se o nome do cliente foi digitado
+  if edtCliente.Text = '' then
+  begin
+    ShowMessage('Por favor, insira o nome do cliente.');
+    Exit;
+  end;
+
+  // Verificar se o cliente já está cadastrado no banco de dados
+  VerificarClienteNoBD;
+
+  // Se o cliente estiver cadastrado, prosseguir com o agendamento
+  if not FDQueryCliente.IsEmpty then
+  begin
+    // Obter o ID_SERVICO do ComboBox
+    SelectedIDServico := Integer(cmbServico.Items.Objects[cmbServico.ItemIndex]);
+
+    // Inserir o agendamento no banco de dados
+    FDQueryAgenda.SQL.Text := 'INSERT INTO AGENDAMENTOS (ID_CLIENTE, ID_SERVICO, DATAAGENDAMENTO) ' +
+                              'VALUES (:ID_CLIENTE, :ID_SERVICO, :DATAAGENDAMENTO)';
+    FDQueryAgenda.ParamByName('ID_CLIENTE').AsInteger := FDQueryCliente.FieldByName('ID_CLIENTE').AsInteger;
+    FDQueryAgenda.ParamByName('ID_SERVICO').AsInteger := SelectedIDServico; // Aqui estamos usando o ID_SERVICO do ComboBox
+    FDQueryAgenda.ParamByName('DATAAGENDAMENTO').AsDateTime := DateTimePicker1.DateTime;
+
+    try
+      FDQueryAgenda.ExecSQL;
+      ShowMessage('Agendamento realizado com sucesso!');
+      edtCliente.Clear;
+      cmbServico.ItemIndex := -1;
+      DateTimePicker1.Date := Now;
+    except
+      on E: Exception do
+        ShowMessage('Erro ao agendar: ' + E.Message);
+    end;
+  end
+  else
+  begin
+    ShowMessage('Cliente não encontrado.');
+  end;
+end;
+
+
+procedure TfrmCadAgenda.edtClienteChange(Sender: TObject);
+begin
+  // Quando o texto do cliente mudar, desabilite o timer e reinicie o contador
+  Timer1.Enabled := False;
+  Timer1.Enabled := True; // Ativa o timer, reiniciando a contagem do tempo
+end;
+
+procedure TfrmCadAgenda.FormShow(Sender: TObject);
+begin
+  CarregarServicos;
+end;
+
+procedure TfrmCadAgenda.CarregarServicos;
+begin
+  // Limpar itens existentes no ComboBox
+  cmbServico.Clear;
+
+  // Buscar os serviços do banco de dados
+  FDQueryAgenda.Close;
+  FDQueryAgenda.SQL.Text := 'SELECT NOMESERVICO, NOME FROM SERVICOS'; // Buscar o ID e nome do serviço
+  FDQueryAgenda.Open;
+
+  while not FDQueryAgenda.Eof do
+  begin
+    // Adiciona o nome do serviço ao ComboBox
+    cmbServico.Items.Add(FDQueryAgenda.FieldByName('NOMESERVICO').AsString);
+
+    // Aqui, associamos o ID_SERVICO ao Item do ComboBox.
+    // Para poder recuperar o ID posteriormente (por exemplo, no evento de agendamento), você pode usar o Tag do ComboBox:
+    cmbServico.Items.Objects[cmbServico.Items.Count - 1] := TObject(FDQueryAgenda.FieldByName('ID_SERVICO').AsInteger);
+
+    FDQueryAgenda.Next;
+  end;
+end;
+
+
+procedure TfrmCadAgenda.Timer1Timer(Sender: TObject);
+begin
+  // Desabilita o timer para evitar que o evento seja chamado repetidamente
+  Timer1.Enabled := False;
+
+  // Verifica se o campo de nome não está vazio
+  if edtCliente.Text <> '' then
+  begin
+    // Chama o método de verificação de cliente no banco de dados
+    VerificarClienteNoBD;
+  end
+  else
+  begin
+    // Caso o campo esteja vazio, talvez limpar algum campo relacionado ao cliente
+    // ou informar ao usuário que o nome precisa ser preenchido.
+    ShowMessage('Por favor, insira um nome de cliente.');
+  end;
+end;
+
+end.
+

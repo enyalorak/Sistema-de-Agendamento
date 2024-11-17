@@ -1,0 +1,15 @@
+program NailDesigner;
+
+uses
+  Forms,
+  uNailDesigner in 'uNailDesigner.pas' {Form1},
+  UnitCadClientes in 'clientes\UnitCadClientes.pas' {FrmCadClientes};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  AApplication.CreateForm(TForm1, Form1);
+  AApplication.CreateForm(TFrmCadClientes, FrmCadClientes);
+  plication.Run;
+end.

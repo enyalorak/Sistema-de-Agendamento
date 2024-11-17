@@ -1,2 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject/>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/11/03 11:07:39.000.171,=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.pas</Transaction>
+    <Transaction>2024/11/03 11:09:19.000.224,C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\clientes\UnitCadClientes.dfm=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.dfm</Transaction>
+    <Transaction>2024/11/03 11:09:19.000.224,C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\clientes\UnitCadClientes.pas=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.pas</Transaction>
+    <Transaction>2024/11/10 11:37:39.000.889,=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.pas</Transaction>
+    <Transaction>2024/11/10 11:39:09.000.037,C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Agenda\unitAgendar.pas=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.pas</Transaction>
+    <Transaction>2024/11/10 11:39:09.000.037,C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Agenda\unitAgendar.dfm=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.dfm</Transaction>
+    <Transaction>2024/11/10 17:42:36.000.924,=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.pas</Transaction>
+    <Transaction>2024/11/10 17:43:02.000.601,C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.dfm=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Servicos\UnitServico.dfm</Transaction>
+    <Transaction>2024/11/10 17:43:02.000.601,C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.pas=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Servicos\UnitServico.pas</Transaction>
+    <Transaction>2024/11/11 20:49:15.000.425,=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.pas</Transaction>
+    <Transaction>2024/11/11 20:49:36.000.292,C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\lista\UnitListagem.pas=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.pas</Transaction>
+    <Transaction>2024/11/11 20:49:36.000.292,C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\lista\UnitListagem.dfm=C:\Users\Usuario\Documents\Embarcadero\trabalho\gleicianenails\Unit2.dfm</Transaction>
+  </Transactions>
+</BorlandProject>
